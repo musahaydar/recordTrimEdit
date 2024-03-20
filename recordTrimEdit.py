@@ -125,6 +125,12 @@ def getEdges():
     while loudness_bytes(sound_chunks[end_pointer-1]) <= config['THRESHOLD'] and end_pointer >= 1:
         end_pointer -= 1
 
+    # little hack to remove the keyboard sound picked up at the beginning of a clip
+    end_pointer -= 1
+
+    # and then add a bit of space to make it more natural sounding
+    start_pointer += 2
+
     start_pointer = max(keyframes[-1],start_pointer-m)
     end_pointer = min(len(sound_chunks),end_pointer+m)
     if start_pointer > end_pointer:
