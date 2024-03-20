@@ -21,7 +21,6 @@ default_sample_rate = 44100
 default_margin = 0.25
 default_threshold = 200
 default_mic_index = 0
-CHUNK_SIZE = default_sample_rate//default_chunk_rate
 
 def read_config():
     try:
