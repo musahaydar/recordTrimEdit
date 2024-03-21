@@ -1,4 +1,10 @@
 venv/
 **/.DS_Store
 
+# python env stuff
+pyvenv.cfg
+bin/
+include/
+lib/
+
 *.wav

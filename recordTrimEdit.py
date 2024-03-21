@@ -216,8 +216,8 @@ def stopListening():
     if sound is not None:
         sound.set_volume(0.0)
 
-
-screen = pg.display.set_mode([1000, 600])
+# default resolution (1920 x 1080) * (3/4)
+screen = pg.display.set_mode([1440, 810])
 my_font = pg.font.SysFont('Arial', 26)
 small_font = pg.font.SysFont('Arial', 20)
 sound = None
