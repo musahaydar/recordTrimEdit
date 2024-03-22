@@ -28,6 +28,7 @@ def read_config():
             config = json.load(f)
     except FileNotFoundError:
         # If file is not found, create it with default parameters
+        print("Warning: no config.json found, using default values")
         config = {
             'CHUNK_RATE': default_chunk_rate,
             'SAMPLE_RATE': default_sample_rate,
@@ -116,6 +117,9 @@ def loudness(arr):
 def getEdges():
     if len(sound_chunks) == 0:
         return 0,0
+    
+    # TODO: in these loops, forgive a few frames of silence just to make the cuts a little more natuaL
+    # TODO: fix bug where keyboard sound isn't being removed
 
     start_pointer = min(len(sound_chunks)-1, keyframes[-1]+m)
     while loudness_bytes(sound_chunks[start_pointer]) <= config['THRESHOLD'] and start_pointer < len(sound_chunks)-1:
@@ -123,12 +127,6 @@ def getEdges():
     end_pointer = max(0, len(sound_chunks)-m)
     while loudness_bytes(sound_chunks[end_pointer-1]) <= config['THRESHOLD'] and end_pointer >= 1:
         end_pointer -= 1
-
-    # little hack to remove the keyboard sound picked up at the beginning of a clip
-    end_pointer -= 1
-
-    # and then add a bit of space to make it more natural sounding
-    start_pointer += 2
 
     start_pointer = max(keyframes[-1],start_pointer-m)
     end_pointer = min(len(sound_chunks),end_pointer+m)
@@ -142,6 +140,9 @@ def removeSilentEnds():
 
     start_pointer, end_pointer = getEdges()
 
+    # end_previous = max(keyframes[-1]-5, 0)
+    # sound_chunks_p1 = sound_chunks[0:end_previous]
+    
     sound_chunks_p1 = sound_chunks[0:keyframes[-1]]
     sound_chunks_p2 = sound_chunks[start_pointer:end_pointer]
     sound_chunks = sound_chunks_p1 + sound_chunks_p2
