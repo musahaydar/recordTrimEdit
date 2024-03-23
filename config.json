@@ -3,5 +3,7 @@
     "SAMPLE_RATE": 44100,
     "MARGIN": 0.25,
     "THRESHOLD": 1200,
-    "MIC_INDEX": 0
+    "MIC_INDEX": 0,
+    "SCREEN_WIDTH": 1440,
+    "SCREEN_HEIGHT": 810
 }
